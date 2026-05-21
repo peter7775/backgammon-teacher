@@ -1,3 +1,3 @@
-module github.com/peter7775/go-backgammon
+module backgammon-go-skeleton
 
-go 1.26.2
+go 1.22
