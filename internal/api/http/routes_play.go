@@ -74,6 +74,12 @@ func (s *Server) handleGameByID(w stdhttp.ResponseWriter, r *stdhttp.Request) {
 			return
 		}
 		s.handleHint(w, r, gameID)
+	case "analysis":
+		if r.Method != stdhttp.MethodPost {
+			writeError(w, stdhttp.StatusMethodNotAllowed, "method not allowed")
+			return
+		}
+		s.handleAnalyze(w, r, gameID)
 	default:
 		writeError(w, stdhttp.StatusNotFound, "route not found")
 	}
@@ -106,14 +112,80 @@ func (s *Server) handleSubmitMove(w stdhttp.ResponseWriter, r *stdhttp.Request, 
 		return
 	}
 
+	analysis, err := s.analyze.Execute(game.Position, move)
+	if err == nil {
+		game.LastAnalysis = analysis.Summary
+	}
+
 	writeJSON(w, stdhttp.StatusOK, dto.GameResponseFromDomain(game))
 }
 
-func (s *Server) handleHint(w stdhttp.ResponseWriter, r *stdhttp.Request, gameID string) {
-	hint, err := s.hint.Execute(gameID)
+func (s *Server) handleAnalyze(w stdhttp.ResponseWriter, r *stdhttp.Request, gameID string) {
+	game, err := s.getGame.Execute(gameID)
+	if err != nil {
+		writeError(w, stdhttp.StatusNotFound, err.Error())
+		return
+	}
+	if len(game.Moves) == 0 {
+		writeError(w, stdhttp.StatusBadRequest, "no move submitted yet")
+		return
+	}
+
+	lastMove := game.Moves[len(game.Moves)-1]
+	analysis, err := s.analyze.Execute(game.Position, lastMove)
 	if err != nil {
 		writeError(w, stdhttp.StatusInternalServerError, err.Error())
 		return
 	}
-	writeJSON(w, stdhttp.StatusOK, dto.HintResponse{Title: hint.Title, Message: hint.Message})
+
+	hint, _ := s.hint.Execute(analysis)
+	writeJSON(w, stdhttp.StatusOK, dto.AnalyzeMoveResponse{
+		Summary:        hint.Summary,
+		Recommendation: hint.Recommendation,
+		Classification: hint.Classification,
+		BestMove:       hint.BestMove,
+	})
+}
+
+func (s *Server) handleHint(w stdhttp.ResponseWriter, r *stdhttp.Request, gameID string) {
+	game, err := s.getGame.Execute(gameID)
+	if err != nil {
+		writeError(w, stdhttp.StatusNotFound, err.Error())
+		return
+	}
+
+	var analysisResult any
+	if len(game.Moves) > 0 {
+		lastMove := game.Moves[len(game.Moves)-1]
+		analysisResult, err = s.analyze.Execute(game.Position, lastMove)
+		if err != nil {
+			writeError(w, stdhttp.StatusInternalServerError, err.Error())
+			return
+		}
+		hint, err := s.hint.Execute(analysisResult.(interface{ }) )
+		_ = hint
+	}
+
+	analysis, err := s.analyze.Execute(game.Position, play.Move{})
+	if err != nil {
+		writeError(w, stdhttp.StatusInternalServerError, err.Error())
+		return
+	}
+	if len(game.Moves) > 0 {
+		analysis, _ = s.analyze.Execute(game.Position, game.Moves[len(game.Moves)-1])
+	}
+
+	hint, err := s.hint.Execute(analysis)
+	if err != nil {
+		writeError(w, stdhttp.StatusInternalServerError, err.Error())
+		return
+	}
+	writeJSON(w, stdhttp.StatusOK, dto.HintResponse{
+		Title:          hint.Title,
+		Message:        hint.Message,
+		Summary:        hint.Summary,
+		Recommendation: hint.Recommendation,
+		Classification: hint.Classification,
+		BestMove:       hint.BestMove,
+	})
 }

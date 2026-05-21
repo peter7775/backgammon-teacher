@@ -1,10 +1,11 @@
 package domain
 
 type Game struct {
-	ID       string
-	Position Position
-	Cube     Cube
-	Moves    []Move
+	ID            string
+	Position      Position
+	Cube          Cube
+	Moves         []Move
+	LastAnalysis  string
 }
 
 func StartGame(id string) Game {

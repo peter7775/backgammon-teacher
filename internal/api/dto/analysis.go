@@ -1,5 +1,8 @@
 package dto
 
-type AnalyzeMoveRequest struct {
-	GameID string `json:"gameId"`
+type AnalyzeMoveResponse struct {
+	Summary        string   `json:"summary"`
+	Recommendation string   `json:"recommendation"`
+	Classification string   `json:"classification"`
+	BestMove       []string `json:"bestMove"`
 }

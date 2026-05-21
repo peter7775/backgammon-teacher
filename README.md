@@ -16,25 +16,12 @@ Default address is `:8080` and can be changed with `HTTP_ADDR`.
 - `POST /api/v1/games`
 - `GET /api/v1/games/{id}`
 - `POST /api/v1/games/{id}/moves`
+- `POST /api/v1/games/{id}/analysis`
 - `POST /api/v1/games/{id}/hint`
 
-## Examples
+## Current teaching flow
 
-Create game:
-
-```json
-{
-  "gameId": "game-001"
-}
-```
-
-Submit move:
-
-```json
-{
-  "steps": [
-    {"from": 13, "to": 7, "pips": 6},
-    {"from": 8, "to": 7, "pips": 1}
-  ]
-}
-```
+1. Client submits a move.
+2. Backend stores the move.
+3. Analysis module compares it with a placeholder best move.
+4. Coach module returns teaching feedback, classification and recommended best move.

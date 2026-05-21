@@ -3,6 +3,7 @@ package http
 import (
 	stdhttp "net/http"
 
+	analysisapp "backgammon-teacher/internal/modules/analysis/app"
 	coachapp "backgammon-teacher/internal/modules/coach/app"
 	playapp "backgammon-teacher/internal/modules/play/app"
 	playinfra "backgammon-teacher/internal/modules/play/infra"
@@ -13,6 +14,7 @@ type Server struct {
 	startGame  playapp.StartGame
 	getGame    playapp.GetGame
 	submitMove playapp.SubmitMove
+	analyze    analysisapp.AnalyzeMove
 	hint       coachapp.GenerateHint
 }
 
@@ -24,6 +26,7 @@ func NewServer() *Server {
 		startGame:  playapp.StartGame{Games: gameRepo},
 		getGame:    playapp.GetGame{Games: gameRepo},
 		submitMove: playapp.SubmitMove{Games: gameRepo},
+		analyze:    analysisapp.AnalyzeMove{},
 		hint:       coachapp.GenerateHint{},
 	}
 
