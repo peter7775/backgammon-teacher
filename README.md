@@ -1,3 +1,3 @@
-# backgammon-go-skeleton
+# backgammon-teacher
 
-Minimal Go skeleton for a backgammon engine.
+Headless DDD skeleton for a backgammon teacher application with web and desktop clients.

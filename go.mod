@@ -1,3 +1,3 @@
-module backgammon-go-skeleton
+module backgammon-teacher
 
 go 1.22
