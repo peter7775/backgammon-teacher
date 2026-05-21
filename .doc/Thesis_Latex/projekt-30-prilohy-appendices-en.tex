@@ -1,0 +1,180 @@
+\chapter{User manual}
+\subsection*{System Requirements}
+\begin{itemize}
+    \item \textbf{Operating System}: Windows 10 or later (64-bit)
+    \item \textbf{Disk Space}: Approximately 150MB
+    \item \textbf{.NET Runtime}: Not required if using the precompiled version
+\end{itemize}
+
+\subsection*{Included Files}
+
+The extracted archive should have the following structure:
+
+\begin{verbatim}
+Backgammon/
+|- Backgammon.sln
+|- Core/
+|  |- (core game logic and AI)
+|- Backgammon_UI/
+|  |- (WPF user interface)
+|- Game/
+|  |- Backgammon.exe
+\end{verbatim}
+
+\subsection*{Option 1: Run Precompiled Version (No Build Required)}
+
+\begin{enumerate}
+    \item Unzip the archive to any folder.
+    \item Navigate to the \texttt{Game/} directory.
+    \item Launch \verb|Backgammon.exe|
+\end{enumerate}
+
+\noindent
+\textbf{Note:} This version is a self-contained build that includes all necessary native libraries and the .NET runtime.
+
+\vspace{1em}
+
+\subsection*{Option 2: Build from Source}
+To build the project from source (Options 2A or 2B), you must have the \textbf{.NET 8.0 SDK} installed.
+
+\subsubsection*{Method A: Run Directly from Source}
+
+Run the following command from the root directory:
+
+\begin{verbatim}
+dotnet build
+dotnet run --project Backgammon
+\end{verbatim}
+
+
+\subsubsection*{Method B: Publish for Distribution}
+
+Using this method, the \verb|Backgammon.exe| file was generated.
+
+\begin{verbatim}
+dotnet publish "Backgammon/Backgammon.csproj" ^
+  -c Release ^
+  -r win-x64 ^
+  --self-contained true ^
+  /p:PublishSingleFile=true ^
+  /p:IncludeNativeLibrariesForSelfExtract=true ^
+  /p:PublishTrimmed=false ^
+  -o "publish"
+\end{verbatim}
+
+This generates a single \texttt{.exe} file that can run on any compatible Windows machine without .NET installed. 
+ The output will be in the \texttt{publish/} directory.
+
+\subsection*{Launching the Game}
+
+After launching the game (note that the first launch may take a while to initialize), two windows will open:
+
+\begin{itemize}
+    \item A \textbf{terminal window} that provides runtime information about the AI evaluation process during the game. This window updates in real time as moves are evaluated.
+    \item The \textbf{main game window}, which serves as the graphical interface for playing Backgammon.
+\end{itemize}
+
+\subsection*{Starting a New Game}
+
+By default, the game opens with a preselected \textbf{Player vs Player (PvP)} mode. To configure and start a new game:
+
+\begin{enumerate}
+    \item Select the desired \textbf{game mode}:
+    \begin{itemize}
+        \item Player vs Player (PvP)
+        \item Player vs AI
+        \item AI vs AI
+    \end{itemize}
+
+    \item If you selected \emph{Player vs AI}, choose the \textbf{player side} (White or Black).
+
+    \item If the selected game mode is not PvP, specify the \textbf{search depth} in plies:
+
+    \item Click the \textbf{``New Game''} button to initialize the game with the selected settings.
+\end{enumerate}
+
+\subsection*{Making a Move}
+The starting player is selected randomly at the beginning of each new game.
+At the beginning of each player's turn, the following steps are required:
+
+\begin{enumerate}
+    \item Click the \textbf{``Roll Dice''} button.
+    \begin{itemize}
+        \item The two dice values will be displayed as \texttt{Dice 1} and \texttt{Dice 2}.
+        \item The last roll of the opponent is also shown for reference.
+    \end{itemize}
+
+    \item After rolling the dice, click on a point containing one of your checkers. This selects the source point and highlights all legal destination points in \textbf{green}.
+
+    \item Click on one of the green-highlighted destination points to complete the move.
+
+    \item To bear off a checker, click on the point containing a checker eligible to bear off. If bearing off is allowed, the corresponding zone will be highlighted. Click the bear-off zone to complete the action.
+\end{enumerate}
+
+\subsection*{AI vs AI Mode Configuration}
+
+When selecting the \textbf{AI vs AI} game mode, you may optionally select one or more of the five evaluation factors for each AI instance independently. The selected factors will be applied to the corresponding AI player for the duration of the game.
+
+
+\subsection*{Controlling AI Execution}
+
+During an AI vs AI game, you can control the simulation with the following buttons:
+
+\begin{itemize}
+    \item \textbf{Stop}: Pauses the game after the current move is completed.
+    \item \textbf{Resume}: Resumes the game from the point it was paused.
+\end{itemize}
+
+\chapter{Expected Number of Points Advanced per Turn}\label{avg_pips}
+
+In Backgammon, the number of points a player can advance in a turn depends on the outcome of rolling two six-sided dice. Each turn consists of either a non-double roll (two different numbers) or a double roll (both dice show the same number). The expected number of points advanced can be computed by considering all 36 possible dice outcomes and calculating the average total move distance per turn.
+
+We distinguish two cases:
+
+\begin{itemize}
+    \item \textbf{Non-doubles:} There are 30 outcomes where the two dice show different numbers. Each such outcome allows the player to make two moves, one using each die. For example, rolling a 2 and a 5 allows a player to move one checker by 2 points and another by 5 points, for a total of 7.
+    \item \textbf{Doubles:} There are 6 outcomes where both dice show the same number (e.g., 3--3). In this case, the player is allowed to make four moves, each equal to the value of the die. For example, 3--3 allows four moves of 3, totaling 12 points.
+\end{itemize}
+
+To compute the expected number of points a player advances in a single turn in Backgammon, we split the computation into two distinct cases: \textbf{non-double rolls} and \textbf{double rolls}. The final expectation is calculated as a weighted average based on their respective probabilities.
+
+There are \( 30 \) distinct non-double combinations of two dice (e.g., (1,2), (1,3), ..., (5,6)). In such cases, each die is used once, and the total number of points advanced in the turn is the sum of the two dice.
+
+Let \( S_{\text{non-double}} \) denote the average movement in a non-double roll:
+
+\[
+S_{\text{non-double}} = \frac{1}{15} \sum_{1 \leq i < j \leq 6} (i + j)
+\]
+
+Enumerating all unique pairs and their sums:
+
+\[
+\text{Sums} = 3 + 4 + 5 + 6 + 7 + 5 + 6 + 7 + 8 + 7 + 8 + 9 + 9 + 10 + 11 = 105
+\]
+
+There are 15 such combinations, so:
+
+\[
+S_{\text{non-double}} = \frac{105}{15} = 7
+\]
+
+There are 6 possible double rolls: (1,1), (2,2), ..., (6,6). In a double roll, each die value is played four times. Therefore, the total points advanced is \( 4 \times d \), where \( d \) is the die value.
+
+Let \( S_{\text{double}} \) be the average movement in a double roll:
+
+\[
+S_{\text{double}} = \frac{1}{6} \sum_{d=1}^{6} 4d = \frac{1}{6} \cdot 4 \cdot \sum_{d=1}^{6} d = \frac{1}{6} \cdot 4 \cdot \frac{6 \cdot 7}{2} = \frac{84}{6} = 14
+\]
+
+The probability of a non-double roll is \( \frac{5}{6} \), and the probability of a double roll is \( \frac{1}{6} \). The expected number of points advanced per turn is:
+
+\[
+E = \frac{5}{6} \cdot S_{\text{non-double}} + \frac{1}{6} \cdot S_{\text{double}} = \frac{5}{6} \cdot 7 + \frac{1}{6} \cdot 14 = \frac{35}{6} + \frac{14}{6} = \frac{49}{6}
+\]
+
+\[
+E = \frac{49}{6} \approx 8.17
+\]
+
+This value is used in the AI's ExpectiMiniMax implementation as a baseline estimate for the opponent's positional progress during skipped turns.
+

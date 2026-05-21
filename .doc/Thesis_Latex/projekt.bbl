@@ -1,0 +1,104 @@
+\makeatletter
+\makeatother
+\begin{thebibliography}{10}
+
+\bibitem{backgammon_galaxy}
+{\sc\bgroup}{Backgammon Galaxy}{\egroup}.
+\newblock {\em How to Play Backgammon} online.
+\newblock 2025.
+\newblock 19. 4. 2025.
+\newblock Available at:
+  ~{\small\url{https://www.backgammongalaxy.com/how-to-play-backgammon}}.
+
+\bibitem{rules}
+{\sc\bgroup}{Backgammon Galore}{\egroup}.
+\newblock {\em Backgammon Rules} online.
+\newblock 2025.
+\newblock 19. 4. 2025.
+\newblock Available at: ~{\small\url{https://www.bkgm.com/rules.html}}.
+
+\bibitem{brunner2019mastering}
+{\sc\bgroup}Brunner{\egroup}, F.
+\newblock Mastering the game of Go with deep neural networks and tree search
+  (Silver 2016).
+\newblock {\em 2016 Heidelberg University}, 2019.
+
+\bibitem{buro1995probcut}
+{\sc\bgroup}Buro{\egroup}, M.
+\newblock Probcut: An effective selective extension of the $\alpha$-$\beta$
+  algorithm.
+\newblock {\em ICGA Journal}.
+\newblock SAGE Publications Sage UK: London, England, 1995, vol.~18, no.~2,
+  p.~71--76.
+
+\bibitem{AlphaMuZero}
+{\sc\bgroup}{Google DeepMind}{\egroup}.
+\newblock {\em AlphaZero and MuZero} online.
+\newblock 2025.
+\newblock 26. 4. 2025.
+\newblock Available at:
+  ~{\small\url{https://deepmind.google/research/breakthroughs/alphazero-and-muzero/}}.
+
+\bibitem{*-MiniMax}
+{\sc\bgroup}Hauk{\egroup}, T.; {\sc\bgroup}Buro{\egroup}, M.
+  and~{\sc\bgroup}Schaeffer{\egroup}, J.
+\newblock *-MINIMAX performance in backgammon.
+\newblock In:~{\em Proceedings of the 4th International Conference on Computers
+  and Games}.
+\newblock Berlin, Heidelberg: Springer-Verlag, 2004, p.~51–66.
+\newblock CG'04.
+\newblock ISBN 3540324887.
+\newblock Available at: ~{\small\url{https://doi.org/10.1007/11674399_4}}.
+
+\bibitem{Lai2006ApplyingGA}
+{\sc\bgroup}Lai{\egroup}, Y.-L.; {\sc\bgroup}Chang{\egroup}, S. K.~Y.
+  and~{\sc\bgroup}Ko{\egroup}, T.-C.
+\newblock Applying Genetic Algorithm and Self-Learning on Computer Othello.
+\newblock In:.
+\newblock 2006.
+\newblock Available at:
+  ~{\small\url{https://api.semanticscholar.org/CorpusID:17057822}}.
+
+\bibitem{Lamanosa2013ExpectimaxET}
+{\sc\bgroup}Lamanosa{\egroup}, R.~G.; {\sc\bgroup}Lim{\egroup}, K.~C.;
+  {\sc\bgroup}Domini{\'c}{\egroup}, I.; {\sc\bgroup}Manarang{\egroup}, T.;
+  {\sc\bgroup}Sagum{\egroup}, R.~A. et~al.
+\newblock Expectimax Enhancement through Parallel Search for Non-Deterministic
+  Games.
+\newblock {\em International Journal of Future Computer and Communication},
+  2013, p.~466--470.
+\newblock Available at:
+  ~{\small\url{https://api.semanticscholar.org/CorpusID:54208618}}.
+
+\bibitem{syzygy}
+{\sc\bgroup}Man{\egroup}, R. de.
+\newblock {\em Syzygy Endgame Tablebases} online.
+\newblock 2018.
+\newblock 29. 4. 2025.
+\newblock Available at: ~{\small\url{https://syzygy-tables.info/}}.
+
+\bibitem{microsoft_utf16}
+{\sc\bgroup}{Microsoft Docs}{\egroup}.
+\newblock {\em How to use character encoding classes in .NET} online.
+\newblock 2023.
+\newblock 30. 4. 2025.
+\newblock Available at:
+  ~{\small\url{https://learn.microsoft.com/en-us/Dotnet/standard/base-types/character-encoding}}.
+
+\bibitem{russel2010}
+{\sc\bgroup}Russell{\egroup}, S. and~{\sc\bgroup}Norvig{\egroup}, P.
+\newblock {\em Artificial Intelligence: A Modern Approach}.
+\newblock 3rd ed.
+\newblock Pearson, 2010.
+\newblock ISBN 978-0136042594.
+
+\bibitem{Temporal_Difference}
+{\sc\bgroup}Tesauro{\egroup}, G.
+\newblock Temporal difference learning and TD-Gammon.
+\newblock {\em Commun. ACM}.
+\newblock New York, NY, USA: Association for Computing Machinery, march 1995,
+  vol.~38, no.~3, p.~58–68.
+\newblock ISSN 0001-0782.
+\newblock Available at: ~{\small\url{https://doi.org/10.1145/203330.203343}}.
+
+\end{thebibliography}
