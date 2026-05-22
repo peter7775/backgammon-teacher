@@ -1,0 +1,12 @@
+{
+  "primary": "Claude Opus 4.7",
+  "default": "Claude Sonnet 4.6",
+  "local": "gpt-oss-20b",
+  "routing": {
+    "review_move": "Claude Sonnet 4.6",
+    "hard_reasoning": "Claude Opus 4.7",
+    "rag_answer": "Claude Sonnet 4.6",
+    "planning": "Claude Opus 4.7",
+    "offline": "gpt-oss-20b"
+  }
+}

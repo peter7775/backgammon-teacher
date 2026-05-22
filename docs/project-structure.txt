@@ -1,0 +1,42 @@
+backgammon-teacher/
+├── cmd/
+│   ├── api/
+│   │   └── main.go
+│   ├── worker/
+│   │   └── main.go
+│   └── desktop/
+│       └── main.go
+├── internal/
+│   ├── app/
+│   ├── config/
+│   ├── domain/
+│   │   ├── game/
+│   │   ├── knowledge/
+│   │   └── agent/
+│   ├── llm/
+│   ├── rag/
+│   ├── agent/
+│   ├── observability/
+│   ├── persistence/
+│   ├── transport/
+│   │   ├── http/
+│   │   └── grpc/
+│   └── ui/
+├── pkg/
+├── api/
+│   └── openapi.yaml
+├── docs/
+├── scripts/
+├── migrations/
+├── testdata/
+├── assets/
+├── .github/
+│   └── workflows/
+├── README.md
+├── CONTRIBUTING.md
+├── SECURITY.md
+├── CODE_OF_CONDUCT.md
+├── LICENSE
+├── Makefile
+├── go.mod
+└── go.sum

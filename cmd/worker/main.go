@@ -3,5 +3,5 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("Backgammon Teacher Desktop")
+	fmt.Println("Backgammon Teacher Worker")
 }

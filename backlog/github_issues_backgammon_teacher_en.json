@@ -1,0 +1,290 @@
+[
+  {
+    "number": 1,
+    "title": "Stabilize project structure and package boundaries",
+    "type": "architecture",
+    "priority": "high",
+    "milestone": "M1 Foundation",
+    "body": "Review and finalize package boundaries between modules, agents, api, infra, observability, and integration so that each layer has clear responsibilities and no direct shortcuts across the system.\n\nAcceptance criteria:\n- Package boundaries are documented.\n- Forbidden cross-layer dependencies are removed or prevented.\n- docs/context-map.md and the architecture diagram are updated."
+  },
+  {
+    "number": 2,
+    "title": "Introduce unified dependency injection and composition root",
+    "type": "architecture",
+    "priority": "high",
+    "milestone": "M1 Foundation",
+    "body": "Replace ad hoc initialization of use-cases and repository components with a central composition root for server, web, and desktop runtimes.\n\nAcceptance criteria:\n- Clear bootstrap for cmd/server.\n- Configurable registries for repositories, agents, and tools.\n- Testable initialization without global state."
+  },
+  {
+    "number": 3,
+    "title": "Introduce configuration system for environments and feature flags",
+    "type": "backend",
+    "priority": "high",
+    "milestone": "M1 Foundation",
+    "body": "Add configuration support for databases, embedding provider, LLM provider, local/offline mode, agentic features, and RAG mode.\n\nAcceptance criteria:\n- Typed config structures.\n- .env.example or equivalent template.\n- Feature flags for agentic, rag, local-knowledge, shared-knowledge."
+  },
+  {
+    "number": 4,
+    "title": "Set up database migrations and schema management",
+    "type": "backend",
+    "priority": "high",
+    "milestone": "M1 Foundation",
+    "body": "Introduce managed SQL migrations for both SQLite and PostgreSQL so the persistence layer is repeatable and deployable.\n\nAcceptance criteria:\n- Migrations for game data.\n- Migrations for knowledge documents and chunks.\n- Documentation for local and server-side setup."
+  },
+  {
+    "number": 5,
+    "title": "Implement board position representation and game state serialization",
+    "type": "backend",
+    "priority": "high",
+    "milestone": "M2 Playable core",
+    "body": "Refine Position, Move, Step, Cube, and position serialization so game state can be validated, persisted, and used in tests.\n\nAcceptance criteria:\n- Deterministic serialization/deserialization.\n- Game state validation.\n- Snapshot tests for board positions."
+  },
+  {
+    "number": 6,
+    "title": "Implement legal move generator",
+    "type": "backend",
+    "priority": "critical",
+    "milestone": "M2 Playable core",
+    "body": "Add a real legal move generator including bar entry, bearing off, doubles, and rules for mandatory dice usage.\n\nAcceptance criteria:\n- Supports standard backgammon rules.\n- Tests for edge cases.\n- Deterministic output for identical inputs."
+  },
+  {
+    "number": 7,
+    "title": "Implement applying moves to the board",
+    "type": "backend",
+    "priority": "critical",
+    "milestone": "M2 Playable core",
+    "body": "Connect SubmitMove to actual board state mutation instead of only storing move history.\n\nAcceptance criteria:\n- Moves update board state correctly.\n- Illegal moves return validation errors.\n- Saved games contain the updated post-move state."
+  },
+  {
+    "number": 8,
+    "title": "Implement dice, turn handling, and game lifecycle",
+    "type": "backend",
+    "priority": "high",
+    "milestone": "M2 Playable core",
+    "body": "Add dice rolling, turn switching, game lifecycle state, and game completion handling.\n\nAcceptance criteria:\n- Correct turn switching.\n- Lifecycle validation.\n- API returns game state, active player, and latest roll."
+  },
+  {
+    "number": 9,
+    "title": "Implement first heuristic position evaluator",
+    "type": "AI/backend",
+    "priority": "high",
+    "milestone": "M3 Teaching loop",
+    "body": "Replace the placeholder best move with an initial heuristic evaluator based on safety, board strength, pip count, primes, and blot exposure.\n\nAcceptance criteria:\n- Evaluator returns comparable scores for candidate moves.\n- Heuristic is documented.\n- Tests cover basic position types."
+  },
+  {
+    "number": 10,
+    "title": "Implement move analysis against candidate moves",
+    "type": "AI/backend",
+    "priority": "high",
+    "milestone": "M3 Teaching loop",
+    "body": "Extend AnalyzeMove so it compares the played move against multiple candidates from the move generator and evaluator instead of a single placeholder move.\n\nAcceptance criteria:\n- Top N candidates returned.\n- Equity loss or equivalent scoring.\n- Classifications: best, inaccuracy, mistake, blunder."
+  },
+  {
+    "number": 11,
+    "title": "Implement coach explanation layer",
+    "type": "AI/product",
+    "priority": "high",
+    "milestone": "M3 Teaching loop",
+    "body": "Create an explanation layer that translates analytical outputs into didactic feedback according to the player's level.\n\nAcceptance criteria:\n- Multiple explanation difficulty levels.\n- Consistent terminology.\n- Clear separation between structured explanation and natural-language rendering."
+  },
+  {
+    "number": 12,
+    "title": "Add review endpoint with teaching payload",
+    "type": "API",
+    "priority": "high",
+    "milestone": "M3 Teaching loop",
+    "body": "Introduce a unified endpoint that returns move analysis, explanation, and recommendation after a player move.\n\nAcceptance criteria:\n- Endpoint returns analysis + hint + next action.\n- Clearly defined DTOs.\n- API contract tests."
+  },
+  {
+    "number": 13,
+    "title": "Design SQL schema for knowledge documents and chunks",
+    "type": "backend/data",
+    "priority": "high",
+    "milestone": "M4 Hybrid RAG",
+    "body": "Design tables for documents, chunks, metadata, tags, scope, and embedding references for both SQLite and PostgreSQL.\n\nAcceptance criteria:\n- SQL schema for local and shared knowledge stores.\n- Indexing strategy.\n- Data model for citations and provenance."
+  },
+  {
+    "number": 14,
+    "title": "Implement document ingestion pipeline",
+    "type": "AI/backend",
+    "priority": "high",
+    "milestone": "M4 Hybrid RAG",
+    "body": "Add document import, chunking, metadata enrichment, embedding generation, and storage writing for the knowledge system.\n\nAcceptance criteria:\n- Pipeline works for both shared and local scope.\n- Chunking is configurable.\n- Import audit log is available."
+  },
+  {
+    "number": 15,
+    "title": "Implement embedded local RAG store using SQLite vector layer",
+    "type": "backend/desktop",
+    "priority": "high",
+    "milestone": "M4 Hybrid RAG",
+    "body": "Add a real local knowledge implementation for offline and personalized retrieval without requiring users to install a database server.\n\nAcceptance criteria:\n- Local embedding store in an embedded database.\n- Search API for top-k similarity.\n- Works in desktop mode without extra installation."
+  },
+  {
+    "number": 16,
+    "title": "Implement shared knowledge store using PostgreSQL + pgvector",
+    "type": "backend/cloud",
+    "priority": "high",
+    "milestone": "M4 Hybrid RAG",
+    "body": "Add a server-side knowledge store for the central lesson corpus and shared theory with vector retrieval in PostgreSQL.\n\nAcceptance criteria:\n- pgvector migrations and indexes.\n- Search and upsert repository.\n- Filtering by language, topic, and content role."
+  },
+  {
+    "number": 17,
+    "title": "Implement hybrid retrieval merging and reranking",
+    "type": "AI/backend",
+    "priority": "high",
+    "milestone": "M4 Hybrid RAG",
+    "body": "Extend retrieval so it combines local and shared search, keyword signals, metadata filters, and recency signals.\n\nAcceptance criteria:\n- Merge policy with local preference on ties.\n- Reranking pipeline.\n- Evaluation set for relevance quality."
+  },
+  {
+    "number": 18,
+    "title": "Add grounded answer composer with source citations",
+    "type": "AI/product",
+    "priority": "high",
+    "milestone": "M4 Hybrid RAG",
+    "body": "Create a component that builds responses from retrieved chunks with provenance and citable source metadata.\n\nAcceptance criteria:\n- Structured answer payload.\n- Attached chunk IDs and source info.\n- Fallback when retrieval returns nothing."
+  },
+  {
+    "number": 19,
+    "title": "Connect supervisor runtime to HTTP endpoints",
+    "type": "backend/AI",
+    "priority": "high",
+    "milestone": "M5 Agentic orchestration",
+    "body": "Integrate the supervisor layer with API endpoints so agent planning can drive move review and grounded tutoring flows.\n\nAcceptance criteria:\n- Endpoint for review_move goal.\n- Endpoint for rag_answer goal.\n- Unified task envelope."
+  },
+  {
+    "number": 20,
+    "title": "Refine planner and introduce task graph",
+    "type": "AI/backend",
+    "priority": "medium",
+    "milestone": "M5 Agentic orchestration",
+    "body": "Extend the rule-based planner into an explicit task graph with branching, retry policy, and conditional steps.\n\nAcceptance criteria:\n- Task execution state model.\n- Retry policy and timeouts.\n- Trace of the plan across individual steps."
+  },
+  {
+    "number": 21,
+    "title": "Implement per-user agent memory",
+    "type": "AI/backend",
+    "priority": "high",
+    "milestone": "M5 Agentic orchestration",
+    "body": "Extend the memory layer with short-term session memory and long-term learner memory.\n\nAcceptance criteria:\n- Session memory.\n- Learner-specific memory store.\n- API for reading and writing memory entries."
+  },
+  {
+    "number": 22,
+    "title": "Introduce evaluator and reflection loop",
+    "type": "AI/quality",
+    "priority": "medium",
+    "milestone": "M5 Agentic orchestration",
+    "body": "Add an evaluator for agent outputs and a critic step that checks response quality, completeness, and grounding.\n\nAcceptance criteria:\n- Minimal validation rules.\n- States: accepted, retry, fallback.\n- Logged rejection reasons."
+  },
+  {
+    "number": 23,
+    "title": "Introduce guardrails for tool calling",
+    "type": "AI/security",
+    "priority": "high",
+    "milestone": "M5 Agentic orchestration",
+    "body": "Define a tool whitelist, step limits, read/write restrictions, and a safe fallback mode when the AI layer fails.\n\nAcceptance criteria:\n- Tool policy registry.\n- Step limit and timeout limit.\n- Fallback mode without LLM."
+  },
+  {
+    "number": 24,
+    "title": "Stabilize public API contracts",
+    "type": "API",
+    "priority": "high",
+    "milestone": "M3 Teaching loop",
+    "body": "Define API versioning, error model, typed responses, and backward-compatible contracts for both web and desktop clients.\n\nAcceptance criteria:\n- OpenAPI or equivalent specification.\n- Standard error envelope.\n- Documented versioning for /api/v1."
+  },
+  {
+    "number": 25,
+    "title": "Build first web review screen",
+    "type": "frontend",
+    "priority": "medium",
+    "milestone": "M3 Teaching loop",
+    "body": "Create the initial UI for replaying a move, showing analysis, recommended move, and explanation.\n\nAcceptance criteria:\n- Board state display.\n- Review panel with analysis + hint.\n- Dark/light mode support."
+  },
+  {
+    "number": 26,
+    "title": "Add desktop shell with embedded local knowledge",
+    "type": "desktop",
+    "priority": "medium",
+    "milestone": "M4 Hybrid RAG",
+    "body": "Enable the desktop variant with a local knowledge database and synchronization with the shared backend.\n\nAcceptance criteria:\n- Local knowledge cache.\n- Background sync.\n- Offline read mode."
+  },
+  {
+    "number": 27,
+    "title": "Introduce structured logging and tracing",
+    "type": "observability",
+    "priority": "high",
+    "milestone": "M6 Production readiness",
+    "body": "Add request logs, agent step logs, retrieval logs, and trace correlation across layers.\n\nAcceptance criteria:\n- Correlation ID.\n- Logs for API, agents, and RAG.\n- Basic end-to-end request trace."
+  },
+  {
+    "number": 28,
+    "title": "Add quality metrics for analysis and RAG",
+    "type": "observability/AI",
+    "priority": "medium",
+    "milestone": "M6 Production readiness",
+    "body": "Measure retrieval quality, AI latency, fallback counts, hint quality, and teaching loop success.\n\nAcceptance criteria:\n- Latency and error-rate metrics.\n- Retrieval relevance metrics.\n- Dashboard-ready output."
+  },
+  {
+    "number": 29,
+    "title": "Introduce authentication and authorization for users and devices",
+    "type": "security",
+    "priority": "high",
+    "milestone": "M6 Production readiness",
+    "body": "Add user identity, bind sessions to devices, and define permissions for private, local, and shared data.\n\nAcceptance criteria:\n- Authentication flow.\n- Role model for private vs shared knowledge.\n- Protected endpoints."
+  },
+  {
+    "number": 30,
+    "title": "Add CI/CD, linting, and test gates",
+    "type": "devops",
+    "priority": "high",
+    "milestone": "M1 Foundation",
+    "body": "Set up automated builds, tests, linting, and quality gates for pull requests.\n\nAcceptance criteria:\n- CI pipeline for build and test.\n- Lint and formatting checks.\n- Required merge checks."
+  },
+  {
+    "number": 31,
+    "title": "Introduce unit test suites for domain and use-cases",
+    "type": "testing",
+    "priority": "high",
+    "milestone": "M1 Foundation",
+    "body": "Cover core domain rules, use-cases, and repositories with unit tests.\n\nAcceptance criteria:\n- Tests for play, analysis, knowledge, and agent runtime.\n- Test fixtures.\n- Runs in CI."
+  },
+  {
+    "number": 32,
+    "title": "Add API contract tests and persistence integration tests",
+    "type": "testing",
+    "priority": "high",
+    "milestone": "M2 Playable core",
+    "body": "Ensure API stability and validate SQLite/PostgreSQL repository behavior with integration tests.\n\nAcceptance criteria:\n- API contract tests.\n- SQLite integration tests.\n- PostgreSQL integration tests."
+  },
+  {
+    "number": 33,
+    "title": "Add eval harness for AI and RAG workflows",
+    "type": "testing/AI",
+    "priority": "high",
+    "milestone": "M5 Agentic orchestration",
+    "body": "Create an eval dataset and repeatable quality testing for move analysis, retrieval relevance, and grounded answers.\n\nAcceptance criteria:\n- Eval dataset.\n- Automated runner.\n- Baseline scores."
+  },
+  {
+    "number": 34,
+    "title": "Create lesson content model and topic taxonomy",
+    "type": "product/content",
+    "priority": "high",
+    "milestone": "M4 Hybrid RAG",
+    "body": "Define the lesson content model, topic tags, language variants, and difficulty levels for both RAG and tutoring.\n\nAcceptance criteria:\n- Topic taxonomy.\n- Difficulty and mastery mapping.\n- Content model for chunking and retrieval."
+  },
+  {
+    "number": 35,
+    "title": "Add localization and terminology glossary",
+    "type": "product/localization",
+    "priority": "medium",
+    "milestone": "M5 Agentic orchestration",
+    "body": "Introduce localization support for coach outputs and RAG answers, including a consistent backgammon terminology glossary.\n\nAcceptance criteria:\n- Terminology glossary.\n- Localized response rendering.\n- Support for at least CZ/EN."
+  },
+  {
+    "number": 36,
+    "title": "Define product KPIs for the learning application",
+    "type": "product/analytics",
+    "priority": "medium",
+    "milestone": "M6 Production readiness",
+    "body": "Define how tutor quality will be measured: retention, return usage, number of reviewed moves, mastery improvement, and lesson recommendation relevance.\n\nAcceptance criteria:\n- KPI document.\n- Analytics event schema.\n- Integration with observability and product metrics."
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "files": [
+    "README.md",
+    "github_issues_backgammon_teacher_en.md",
+    "github_issues_backgammon_teacher_en.json",
+    "update_github_issues_from_json.sh",
+    "models.yaml",
+    "models.go",
+    "llm_router.go",
+    "llm_provider_examples.go",
+    "router-usage-example.go",
+    "project-structure.txt"
+  ]
+}
