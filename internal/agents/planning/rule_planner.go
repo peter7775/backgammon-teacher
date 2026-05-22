@@ -13,10 +13,13 @@ func (RulePlanner) BuildPlan(ctx runtime.TaskContext, task runtime.Task) (Plan, 
 			{Agent: "coach-agent", Goal: "generate_hint"},
 			{Agent: "progress-agent", Goal: "update_progress"},
 		}}, nil
-	case "recommend_lesson":
+	case "rag_answer":
 		return Plan{Steps: []PlanStep{
-			{Agent: "lesson-agent", Goal: "recommend_lesson"},
+			{Agent: "retrieval-agent", Goal: "retrieve_context"},
+			{Agent: "coach-agent", Goal: "grounded_answer"},
 		}}, nil
+	case "recommend_lesson":
+		return Plan{Steps: []PlanStep{{Agent: "lesson-agent", Goal: "recommend_lesson"}}}, nil
 	default:
 		return Plan{Steps: []PlanStep{{Agent: "coach-agent", Goal: task.Goal}}}, nil
 	}
