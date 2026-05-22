@@ -5,7 +5,7 @@
 
 # Default target
 help:
-	@echo "SQL Graph Visualizer - Development Commands"
+	@echo "Backgammon Teacher - Development Commands"
 	@echo ""
 	@echo "Available targets:"
 	@echo "  format     - Format Go code"
@@ -23,7 +23,7 @@ format:
 # Build the unified CLI application
 build:
 	@echo "Building Backgammon teacher..."
-	go build ./.. .
+	go build -o backgammon-teacher ./...
 	@echo "Build completed: ./backgammon-teacher"
 
 
@@ -58,7 +58,7 @@ ci-check: install generate format
 	@echo "Running tests..."
 	$(MAKE) test
 	@echo "All CI checks passed"
-environment ready"
+	@echo "environment ready"
 
 # Run security scans
 sec-scan:
