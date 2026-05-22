@@ -1,0 +1,40 @@
+providers:
+  primary:
+    name: anthropic
+    model: claude-opus-4-7
+    role: planner_reasoner
+    use_cases:
+      - complex reasoning
+      - agent planning
+      - hard move review
+      - reflection
+    fallback_to: claude-sonnet-4-6
+
+  default:
+    name: anthropic
+    model: claude-sonnet-4-6
+    role: everyday_reasoner_writer
+    use_cases:
+      - move analysis
+      - explanations
+      - grounded answer composition
+      - content generation
+    fallback_to: gpt-oss-20b
+
+  local:
+    name: ollama
+    model: gpt-oss-20b
+    role: offline_local_fallback
+    use_cases:
+      - offline inference
+      - local testing
+      - desktop mode
+      - privacy-sensitive workflows
+    fallback_to: null
+
+routing:
+  review_move: claude-sonnet-4-6
+  hard_reasoning: claude-opus-4-7
+  rag_answer: claude-sonnet-4-6
+  planning: claude-opus-4-7
+  offline: gpt-oss-20b
