@@ -1,20 +1,9 @@
 package runtime
 
-type Task struct {
-	ID       string
-	Goal     string
-	Payload  map[string]any
-	Metadata map[string]any
-}
+import types "backgammon-teacher/internal/agents/types"
 
-type TaskResult struct {
-	Status   string
-	Output   map[string]any
-	Messages []string
-}
-
-type TaskContext struct {
-	SessionID string
-	UserID    string
-	Language  string
-}
+// Re-export shared types from the types package to preserve the runtime package
+// API while avoiding duplicate definitions that cause cyclic imports.
+type Task = types.Task
+type TaskResult = types.TaskResult
+type TaskContext = types.TaskContext

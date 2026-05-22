@@ -1,7 +1,7 @@
 package tools
 
 import (
-	runtime "backgammon-teacher/internal/agents/runtime"
+	types "backgammon-teacher/internal/agents/types"
 	knowledge "backgammon-teacher/internal/modules/knowledge/domain"
 	knowledgeapp "backgammon-teacher/internal/modules/knowledge/app"
 )
@@ -12,7 +12,7 @@ type RetrieveContextTool struct {
 
 func (t RetrieveContextTool) Name() string { return "retrieve_context" }
 
-func (t RetrieveContextTool) Call(ctx runtime.TaskContext, input map[string]any) (map[string]any, error) {
+func (t RetrieveContextTool) Call(ctx types.TaskContext, input map[string]any) (map[string]any, error) {
 	query, _ := input["query"].(string)
 	matches, err := t.Retrieve.Execute(knowledge.Query{
 		Text:      query,

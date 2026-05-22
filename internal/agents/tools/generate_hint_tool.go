@@ -1,7 +1,7 @@
 package tools
 
 import (
-	runtime "backgammon-teacher/internal/agents/runtime"
+	types "backgammon-teacher/internal/agents/types"
 	analysis "backgammon-teacher/internal/modules/analysis/domain"
 	coachapp "backgammon-teacher/internal/modules/coach/app"
 )
@@ -12,7 +12,7 @@ type GenerateHintTool struct {
 
 func (t GenerateHintTool) Name() string { return "generate_hint" }
 
-func (t GenerateHintTool) Call(ctx runtime.TaskContext, input map[string]any) (map[string]any, error) {
+func (t GenerateHintTool) Call(ctx types.TaskContext, input map[string]any) (map[string]any, error) {
 	_ = ctx
 	a, _ := input["analysis"].(analysis.PositionAnalysis)
 	hint, err := t.Coach.Execute(a)

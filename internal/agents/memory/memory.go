@@ -1,10 +1,10 @@
 package memory
 
-import runtime "backgammon-teacher/internal/agents/runtime"
+import types "backgammon-teacher/internal/agents/types"
 
 type Memory interface {
-	Append(ctx runtime.TaskContext, entry Entry) error
-	Recent(ctx runtime.TaskContext, limit int) ([]Entry, error)
+	Append(ctx types.TaskContext, entry Entry) error
+	Recent(ctx types.TaskContext, limit int) ([]Entry, error)
 }
 
 type Entry struct {

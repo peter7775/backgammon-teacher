@@ -1,8 +1,8 @@
 package tools
 
-import runtime "backgammon-teacher/internal/agents/runtime"
+import types "backgammon-teacher/internal/agents/types"
 
 type Tool interface {
 	Name() string
-	Call(ctx runtime.TaskContext, input map[string]any) (map[string]any, error)
+	Call(ctx types.TaskContext, input map[string]any) (map[string]any, error)
 }
