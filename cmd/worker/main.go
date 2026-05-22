@@ -2,6 +2,4 @@ package main
 
 import "fmt"
 
-func main() {
-	fmt.Println("Backgammon Teacher Worker")
-}
+func main(){ fmt.Println("Worker") }

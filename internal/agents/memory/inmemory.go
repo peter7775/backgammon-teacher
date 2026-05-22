@@ -1,26 +1,33 @@
 package memory
 
-import runtime "backgammon-teacher/internal/agents/runtime"
+import (
+	"context"
+	"sync"
+
+	"backgammon-teacher/internal/agents/ports"
+)
 
 type InMemoryStore struct {
-	items map[string][]Entry
+	mu sync.RWMutex
+	data map[string]any
 }
 
-func NewInMemoryStore() *InMemoryStore {
-	return &InMemoryStore{items: map[string][]Entry{}}
+func New() *InMemoryStore {
+	return &InMemoryStore{data: map[string]any{}}
 }
 
-func (s *InMemoryStore) Append(ctx runtime.TaskContext, entry Entry) error {
-	key := ctx.UserID + ":" + ctx.SessionID
-	s.items[key] = append(s.items[key], entry)
+func (s *InMemoryStore) Get(ctx context.Context, key string) (any, bool, error) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	v, ok := s.data[key]
+	return v, ok, nil
+}
+
+func (s *InMemoryStore) Set(ctx context.Context, key string, value any) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.data[key] = value
 	return nil
 }
 
-func (s *InMemoryStore) Recent(ctx runtime.TaskContext, limit int) ([]Entry, error) {
-	key := ctx.UserID + ":" + ctx.SessionID
-	entries := s.items[key]
-	if len(entries) <= limit {
-		return entries, nil
-	}
-	return entries[len(entries)-limit:], nil
-}
+var _ ports.MemoryStore = (*InMemoryStore)(nil)
