@@ -2,4 +2,6 @@ package main
 
 import "fmt"
 
-func main(){ fmt.Println("API") }
+func main() {
+	fmt.Println("Backgammon Teacher API")
+}

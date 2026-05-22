@@ -1,30 +1,14 @@
 package tools
 
-import (
-	types "backgammon-teacher/internal/agents/types"
-	analysis "backgammon-teacher/internal/modules/analysis/domain"
-	coachapp "backgammon-teacher/internal/modules/coach/app"
-)
+import coachapp "backgammon-teacher/internal/modules/coach/app"
 
 type GenerateHintTool struct {
-	Coach coachapp.GenerateHint
+	Generate coachapp.GenerateHintFunc
 }
 
-func (t GenerateHintTool) Name() string { return "generate_hint" }
-
-func (t GenerateHintTool) Call(ctx types.TaskContext, input map[string]any) (map[string]any, error) {
-	_ = ctx
-	a, _ := input["analysis"].(analysis.PositionAnalysis)
-	hint, err := t.Coach.Execute(a)
-	if err != nil {
-		return nil, err
+func NewGenerateHintTool(generate coachapp.GenerateHintFunc) *GenerateHintTool {
+	if generate == nil {
+		generate = coachapp.DefaultGenerateHint
 	}
-	return map[string]any{
-		"title":          hint.Title,
-		"message":        hint.Message,
-		"summary":        hint.Summary,
-		"recommendation": hint.Recommendation,
-		"classification": hint.Classification,
-		"bestMove":       hint.BestMove,
-	}, nil
+	return &GenerateHintTool{Generate: generate}
 }

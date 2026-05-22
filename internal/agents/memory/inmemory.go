@@ -12,20 +12,16 @@ type InMemoryStore struct {
 	data map[string]any
 }
 
-func New() *InMemoryStore {
-	return &InMemoryStore{data: map[string]any{}}
-}
+func New() *InMemoryStore { return &InMemoryStore{data: map[string]any{}} }
 
 func (s *InMemoryStore) Get(ctx context.Context, key string) (any, bool, error) {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
+	s.mu.RLock(); defer s.mu.RUnlock()
 	v, ok := s.data[key]
 	return v, ok, nil
 }
 
 func (s *InMemoryStore) Set(ctx context.Context, key string, value any) error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
+	s.mu.Lock(); defer s.mu.Unlock()
 	s.data[key] = value
 	return nil
 }

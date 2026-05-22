@@ -2,4 +2,6 @@ package main
 
 import "fmt"
 
-func main(){ fmt.Println("Desktop") }
+func main() {
+	fmt.Println("Backgammon Teacher Desktop")
+}
